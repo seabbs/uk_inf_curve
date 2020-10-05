@@ -150,9 +150,11 @@ for(i in 1:length(agelabs)){
                                             generation_time = generation_time,
                                             estimate_rt = FALSE, fixed = FALSE,
                                             delays = list(incubation_period, reporting_delay),
-                                            horizon = 0, samples = 4000, warmup = 500, 
-                                            cores = 4, chains = 4, verbose = TRUE, 
-                                            adapt_delta = 0.95)
+                                            horizon = 0, samples = 4000, 
+                                            stan_args = list(warmup = 500, cores = 4, chains = 4,
+                                                             control = list(adapt_delta = 0.95, 
+                                                                            max_treedepth = 15)),
+                                            verbose = TRUE)
   
   res[[i]] <- estimates$summarised[, age_grp := agelabs[i]][, location := "community"]
   samps[[i]] <- estimates$samples[, age_grp := agelabs[i]][, location := "community"]
